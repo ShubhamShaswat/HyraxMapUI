@@ -1,0 +1,45 @@
+ 
+        .input{
+            
+            width: 50%;
+            border: 1px solid black;
+            font-size: 15px;
+            border-radius: 0px;
+            height: 20px;
+        
+                
+        }
+
+      
+    
+        .box{
+            
+            border: 2px solid #ABB2B9;
+            height: 100%;
+            margin-top: 20px;
+            
+        
+            
+        
+        }    
+
+      .title{
+       
+        text-align: center;
+        color: #ABB2B9;
+        font-size: 20px;
+        height: inherit;
+        position:static;
+      
+    
+      }
+        
+        .text{
+            
+            font-size: 20px;
+            color: black;
+            margin-top: 25px;
+           
+            
+        }
+        
