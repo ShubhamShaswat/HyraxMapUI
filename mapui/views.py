@@ -11,9 +11,17 @@ BASE_URL = 'http://test.opendap.org/opendap/data/nc/coads_climatology.nc.ascii?'
 def coads(north_lat,south_lat,west_lng,east_lng):
     
     if west_lng < 0:
-        west_lng = 90 - (west_lng)
+        west_lng = 360 + (west_lng)
+        
     if east_lng < 0:
-        east_lng = 90 - (east_lng)
+        east_lng = 360 +(east_lng)
+        
+    if west_lng < 21:
+        west_lng = 21
+        
+    if east_lng < 21:
+        east_lng = 21
+    
     
     x1 = math.ceil((west_lng-21)/2)
     x2 = math.floor((east_lng-21)/2)
