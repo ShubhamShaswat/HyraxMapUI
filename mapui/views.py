@@ -1,6 +1,6 @@
 from django.shortcuts import render,HttpResponse,redirect
 from django.http import HttpResponseRedirect
-from .forms import Query
+
 import math
 
 
