@@ -39,17 +39,19 @@
     
     <div class="w3-row">
         <div class="w3-col w3-container s4 m4 l3 " style="border: 2px solid black ; height: inherit" >
-            
+            <form  method="post" name = "form" target="_blank" >
+                
+            {% csrf_token %}
             <p class='text'>Latitude:</p>
              
-            <form  method='get' action='{{url}}'>
+            
                 <input type='text' name='lat_from' id ='lat_from' />
-                <input type='number' name='lat_to' id='lat_to' />
+                <input type='text' name='lat_to' id='lat_to' />
             
                 <p class='text'>Longitude:</p>
             
                 <input type='text' name='lng_from' id ='lng_from' />
-                <input type='number' name='lng_to' id='lng_to' />
+                <input type='text' name='lng_to' id='lng_to' />
                 
            
 
@@ -61,15 +63,22 @@
 
             <br><br>
 
-            <select name="">
-            <option value="sst">Sea Surface Temperature</option>
+            <select name="cat">
+            <option name= "sst" value="SST">Sea Surface Temperature</option>
             </select> 
 
             <br><br>
-
-            <input type="submit"/>
+        
+            
+            
                 
-        </form>            
+                
+                
+            <input type="submit" />
+            </form>    
+                
+        
+            
 
     </div>
         
@@ -130,7 +139,7 @@
 
       
         
-   //crearte a new editable rectangle shape [maybe not needed in our case] 
+   //create a new editable rectangle shape [maybe not needed in our case] 
    
     L.NewRectangleControl = L.EditControl.extend({
 
@@ -149,7 +158,7 @@
     
 
     
-    //editable rectabngle for geo selection
+    //scripts for editable rectabngle for geo selection
    
     var rec = L.rectangle([
         [19, 72.00],
@@ -172,11 +181,11 @@
     
     // gettimg coordinates of rectangle bounds
     
-   rec.on('drag',function (a){
+   rec.on('dragend',function (a){
        
         document.getElementById('lat_to').value = rec.getBounds().getSouthWest().lat.toFixed(4);
         document.getElementById('lat_from').value = rec.getBounds().getNorthWest().lat.toFixed(4);
-        document.getElementById('lng_to').value = rec.getBounds().getSouthEast().lng.toFixed(4);
+        document.getElementById('lng_to').value = rec.getBounds().getEast().toFixed(4);
         document.getElementById('lng_from').value = rec.getBounds().getSouthWest().lng.toFixed(4);
 
    }) ;

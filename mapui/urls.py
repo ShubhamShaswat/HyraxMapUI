@@ -17,6 +17,9 @@ from django.conf.urls import url
 from mapui import views
 
 
+
 urlpatterns = [
     url(r'^$',views.map_home,name='map_home'),
+    
+   
 ]
