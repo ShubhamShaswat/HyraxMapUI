@@ -8,7 +8,7 @@ BASE_URL = 'http://test.opendap.org/opendap/data/nc/coads_climatology.nc.ascii?'
 
 #alogorithm to map coordiates to index values
 
-def modis(north_lat,south_lat,west_lng,east_lng):
+def coads(north_lat,south_lat,west_lng,east_lng):
     
     if west_lng < 0:
         west_lng = 90 - (west_lng)
@@ -45,8 +45,7 @@ def get_url(request):
     category = 'SST'
     
     
-    
-    x1,x2,y1,y2 = modis(float(n_lat),float(s_lat),float(w_lng),float(e_lng))
+    x1,x2,y1,y2 = coads(float(n_lat),float(s_lat),float(w_lng),float(e_lng))
     
     request_url = BASE_URL + category +'[0:1:11][{}:1:{}][{}:1:{}]'.format(y1,y2,x1,x2)
     
