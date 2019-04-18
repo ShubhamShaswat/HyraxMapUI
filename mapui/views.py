@@ -16,7 +16,7 @@ def modis(north_lat,south_lat,west_lng,east_lng):
         east_lng = 90 - (east_lng)
     
     x1 = math.ceil((west_lng-21)/2)
-    x2 = math.ceil((east_lng-21)/2)
+    x2 = math.floor((east_lng-21)/2)
     
     if x1>x2:
         x1,x2=x2,x1
@@ -25,7 +25,7 @@ def modis(north_lat,south_lat,west_lng,east_lng):
     south_lat += 89
     
     y1 = math.floor((south_lat)/2)
-    y2 = math.floor((north_lat)/2)
+    y2 = math.ceil((north_lat)/2)
     
     return x1,x2,y1,y2
         
