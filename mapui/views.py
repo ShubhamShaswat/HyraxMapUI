@@ -60,7 +60,7 @@ def get_url(request):
     time_end = int(time_end.split('-')[1])-1
 
     if time_end < time_start:
-        raise  "Start Month has greater value than End Month !!"
+        raise  Exception("Start Month has greater value than End Month !!")
 
 
 
