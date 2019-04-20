@@ -51,12 +51,22 @@ def get_url(request):
     e_lng = request.POST.get('lng_to')
 
     category = request.POST.get('category')
+    time_start = request.POST.get('time_start')
+    time_end = request.POST.get('time_end')
+
+
+
+    time_start =int(time_start.split('-')[1])-1
+    time_end = int(time_end.split('-')[1])-1
+
+    if time_end < time_start:
+        raise  "Start Month has greater value than End Month !!"
 
 
 
     x1,x2,y1,y2 = coads(float(n_lat),float(s_lat),float(w_lng),float(e_lng))
 
-    request_url = BASE_URL + category +'[0:1:11][{}:1:{}][{}:1:{}]'.format(y1,y2,x1,x2)
+    request_url = BASE_URL + category +'[{}:1:{}][{}:1:{}][{}:1:{}]'.format(time_start,time_end,y1,y2,x1,x2)
 
     return request_url
 
