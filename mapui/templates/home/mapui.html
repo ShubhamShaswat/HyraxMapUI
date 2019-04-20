@@ -6,54 +6,54 @@
     {% load static %}
     <meta charset='utf-8'>
     <meta name="viewport" content="width=device-width,height=device-height, user-scalable=no" />
-    
+
     <title>MAP UI</title>
-    
-    
+
+
     <link rel="stylesheet" href=" {% static "/css/stylesheet.css " %} ">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://npmcdn.com/leaflet@1.3.4/dist/leaflet.css" />
-    
+
     <script src="https://npmcdn.com/leaflet@1.3.4/dist/leaflet.js"></script>
     <script src="https://npmcdn.com/leaflet.path.drag/src/Path.Drag.js"></script>
     <script src="http://leaflet.github.io/Leaflet.Editable/src/Leaflet.Editable.js"></script>
-  
-    
+
+
 <style type='text/css'>
-    
+
       body { margin:5px; padding:0; }
       #map { position: absolute;   left:auto; width: inherit; height: 100%;  }
-    
-        
+
+
 </style>
 
 
 </head>
 
 <body>
-    
+
     <div class="w3-row">
         <div class="w3-col m12 w3-center "><p class='title'>MAP UI FOR HYRAX</p></div>
-  
+
     </div>
-    
+
     <div class="w3-row">
         <div class="w3-col w3-container s4 m4 l3 " style="border: 2px solid black ; height: inherit" >
             <form  method="post" name = "form" target="_blank" >
-                
+
             {% csrf_token %}
             <p class='text'>Latitude:</p>
-             
-            
+
+
                 <input type='text' name='lat_from' id ='lat_from' />
                 <input type='text' name='lat_to' id='lat_to' />
-            
+
                 <p class='text'>Longitude:</p>
-            
+
                 <input type='text' name='lng_from' id ='lng_from' />
                 <input type='text' name='lng_to' id='lng_to' />
-                
-           
+
+
 
             <br><br>
             <select name="">
@@ -63,48 +63,50 @@
 
             <br><br>
 
-            <select name="cat">
+            <select name="category">
             <option name= "sst" value="SST">Sea Surface Temperature</option>
-            </select> 
+            <option name= "airt" value="AIRT">Air Temperature</option>
+
+            </select>
 
             <br><br>
-        
-            
-            
-                
-                
-                
+
+
+
+
+
+
             <input type="submit" />
-            </form>    
-                
-        
-            
+            </form>
+
+
+
 
     </div>
-        
-        <div class="w3-col w3-container s8 m8 l9 ">  
-            
+
+        <div class="w3-col w3-container s8 m8 l9 ">
+
             <div id='map'></div>
-        
+
         </div>
     </div>
 
-           
-   
-   
-        
-        
-    
-    
-    
-            
-                
-    
-            
+
+
+
+
+
+
+
+
+
+
+
+
 <script type="text/javascript">
-    
+
     //leaflet map scripts
-    
+
     var startPoint = [22.00,79.00];
     var map = L.map('map', {editable: true}).setView(startPoint, 4),
         tilelayer = L.tileLayer('http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {maxZoom: 20,minZoom: 0, attribution: 'Data \u00a9 <a href="http://www.openstreetmap.org/copyright"> OpenStreetMap Contributors </a> Tiles \u00a9 HOT'}).addTo(map);
@@ -134,13 +136,13 @@
         }
 
     });
-    
-    
 
-      
-        
-   //create a new editable rectangle shape [maybe not needed in our case] 
-   
+
+
+
+
+   //create a new editable rectangle shape [maybe not needed in our case]
+
     L.NewRectangleControl = L.EditControl.extend({
 
         options: {
@@ -152,48 +154,48 @@
 
     });
 
-    
-   
-    map.addControl(new L.NewRectangleControl());
-    
 
-    
+
+    map.addControl(new L.NewRectangleControl());
+
+
+
     //scripts for editable rectabngle for geo selection
-   
+
     var rec = L.rectangle([
         [19, 72.00],
         [25.00, 90.00]
     ]).bindPopup('REC' ).addTo(map);
     rec.enableEdit();
     rec.on('dblclick', L.DomEvent.stop).on('dblclick', rec.toggleEdit);
-    
-    
+
+
     //to show the coorditaes on the map inside rectangle
-        
+
     rec.on('popupopen', function (e) {
-        
+
     var popup = e.popup;
     popup.setContent('Coordinates: ' +  popup.getLatLng().lat.toFixed(4) + '  ' + popup.getLatLng().lng.toFixed(4));
-        
+
     });
-    
-    
-    
+
+
+
     // getting coordinates of rectangle bounds
-    
+
    rec.on('dragend',function (a){
-       
+
         document.getElementById('lat_to').value = rec.getBounds().getSouthWest().lat.toFixed(4);
         document.getElementById('lat_from').value = rec.getBounds().getNorthWest().lat.toFixed(4);
         document.getElementById('lng_to').value = rec.getBounds().getEast().toFixed(4);
         document.getElementById('lng_from').value = rec.getBounds().getSouthWest().lng.toFixed(4);
 
    }) ;
-    
+
 
 </script>
-    
-    
+
+
 </body>
 
 
