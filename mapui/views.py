@@ -3,9 +3,8 @@ from django.http import HttpResponseRedirect
 
 import math
 
-
-BASE_URL = 'http://test.opendap.org/opendap/data/nc/coads_climatology.nc.ascii?'
-
+BASE_URL1 = 'http://test.opendap.org/opendap/data/nc/coads_climatology.nc.ascii?'
+BASE_URL2 = 'http://test.opendap.org/opendap/noaa_pathfinder/2005001-2005008.s0484pfv50-sst.hdf.ascii?'
 #alogorithm to map coordiates to index values
 
 def coads(north_lat,south_lat,west_lng,east_lng):
@@ -37,13 +36,25 @@ def coads(north_lat,south_lat,west_lng,east_lng):
 
     return x1,x2,y1,y2
 
+#pathfider data alogorithm
 
+def pathfinder(north_lat,south_lat,west_lng,east_lng):
+    north_most =89.9800033569336
+    west_most = -179.981979370117
 
+    lat_diff = 0.043946775858
+    lng_diff = 0.043919452103
+
+    x1= math.floor((north_most-north_lat)/lat_diff)
+    x2 = math.floor((north_most-south_lat)/lat_diff)
+
+    y1 = math.floor((west_lng-west_most)/lng_diff)
+    y2 = math.floor((east_lng-west_most)/lng_diff)
+
+    return x1,x2,y1,y2
 #construct url from coordinates
 
 def get_url(request):
-
-
 
     n_lat = request.POST.get('lat_from')
     s_lat = request.POST.get('lat_to')
@@ -51,10 +62,9 @@ def get_url(request):
     e_lng = request.POST.get('lng_to')
 
     category = request.POST.get('category')
+    data = request.POST.get('data')
     time_start = request.POST.get('time_start')
     time_end = request.POST.get('time_end')
-
-
 
     time_start =int(time_start.split('-')[1])-1
     time_end = int(time_end.split('-')[1])-1
@@ -63,24 +73,23 @@ def get_url(request):
         raise  Exception("Start Month has greater value than End Month !!")
 
 
+    if data == 'modis':
+        x1,x2,y1,y2 = coads(float(n_lat),float(s_lat),float(w_lng),float(e_lng))
+        request_url = BASE_URL1 + category +'[{}:1:{}][{}:1:{}][{}:1:{}]'.format(time_start,time_end,y1,y2,x1,x2)
 
-    x1,x2,y1,y2 = coads(float(n_lat),float(s_lat),float(w_lng),float(e_lng))
+    else:
+        x1,x2,y1,y2 = pathfinder(float(n_lat),float(s_lat),float(w_lng),float(e_lng))
+        request_url = BASE_URL2 + 'sst' +'[{}:1:{}][{}:1:{}]'.format(x1,x2,y1,y2)+',lat[{}:1:{}]'.format(x1,x2)+',lon[{}:1:{}]'.format(y1,y1)
 
-    request_url = BASE_URL + category +'[{}:1:{}][{}:1:{}][{}:1:{}]'.format(time_start,time_end,y1,y2,x1,x2)
 
     return request_url
 
-
-
-
 def map_home(request):
-
 
     if request.method == 'POST':
 
         url = get_url(request)
         print(url)
         return redirect(url)
-
 
     return render(request, 'home/mapui.html')
