@@ -72,14 +72,17 @@ def get_url(request):
     if time_end < time_start:
         raise  Exception("Start Month has greater value than End Month !!")
 
+    ## DEBUG:
+    print(data)
+    print(category)
 
-    if data == 'modis':
+    if data == 'COADS':
         x1,x2,y1,y2 = coads(float(n_lat),float(s_lat),float(w_lng),float(e_lng))
         request_url = BASE_URL1 + category +'[{}:1:{}][{}:1:{}][{}:1:{}]'.format(time_start,time_end,y1,y2,x1,x2)
 
     else:
         x1,x2,y1,y2 = pathfinder(float(n_lat),float(s_lat),float(w_lng),float(e_lng))
-        request_url = BASE_URL2 + 'sst' +'[{}:1:{}][{}:1:{}]'.format(x1,x2,y1,y2)+',lat[{}:1:{}]'.format(x1,x2)+',lon[{}:1:{}]'.format(y1,y1)
+        request_url = BASE_URL2 + 'sst' +'[{}:1:{}][{}:1:{}]'.format(x1,x2,y1,y2)+',lat[{}:1:{}]'.format(x1,x2)+',lon[{}:1:{}]'.format(y1,y2)
 
 
     return request_url
