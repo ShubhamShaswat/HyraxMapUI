@@ -11,6 +11,7 @@ clone the respository
 $ git clone https://github.com/ShubhamShaswat/HyraxMapUI.git
 ```
 
+#make virtual environmnet
 ```
 $ mkvirtualenv --python=/usr/bin/python3.4 HyraxMapUI-virtualenv
 ```
@@ -18,7 +19,7 @@ $ mkvirtualenv --python=/usr/bin/python3.4 HyraxMapUI-virtualenv
 Install Django using pip
 
 ```
-$ pip install -r requirements.txt
+$ pip install django
 ```
 
 
