@@ -6,25 +6,35 @@ I will automatical create a request for the server to fetch data based on the co
 
 ## Run the App
 
-Install Django using pip
-
-```
-$ pip install django
-```
-
-After Installation
-
 clone the respository
 ```
 $ git clone https://github.com/ShubhamShaswat/HyraxMapUI.git
 ```
+
+```
+$ mkvirtualenv --python=/usr/bin/python3.4 HyraxMapUI-virtualenv
+```
+
+Install Django using pip
+
+```
+$ pip install -r requirements.txt
+```
+
 
 Go to the directory
 ```
 $ cd HyraxMapUI
 ```
 
-run local server
+```
+$ python manage.py migrate
+```
+
+```
+$ python manage.py createsuperuser
+```
+
 
 ```
 $ python manage.py runserver
